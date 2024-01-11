@@ -7,30 +7,29 @@ import javax.jws.WebService;
 
 import classes.compte;
 
-@WebService
+@WebService(serviceName="banqueService")
 public class BanqueService {
+	private compte compte;
 	
-	 private compte compte;
-	 
-     public BanqueService()
-     {
+	public BanqueService(){
     	 this.compte= new compte(30.5f, new Date(), 2);
-    	 System.out.println("compte object created with solde: " + compte.getSolde());
+    	 System.out.println("Account object created with credit: " + compte.getSolde());
      }
-     @WebMethod
+     
+    @WebMethod(operationName="conversion")
  	public double conversion(@WebParam double mont)
  	{
-    	 System.out.println("Received mont: " + mont);
+    	 System.out.println("Received amount: " + mont);
     	    double result = mont * 3.5;
     	    System.out.println("Result: " + result);
  		    return result;
  	}
- 	@WebMethod
+ 	@WebMethod(operationName="withdraw")
  	public double retirer(@WebParam double mont) {
  	    double currentSolde = this.compte.getSolde();
  	    double newSolde = currentSolde - mont;
- 	    System.out.println("Current Solde: " + currentSolde);
- 	    System.out.println("Montant to withdraw: " + mont);
+ 	    System.out.println("Current credit: " + currentSolde);
+ 	    System.out.println("Money to withdraw: " + mont);
  	    System.out.println("New Solde: " + newSolde);
 
  	    if (newSolde < 0) {
